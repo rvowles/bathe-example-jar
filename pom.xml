@@ -19,17 +19,20 @@
 		  <artifactId>bathe-booter</artifactId>
 		  <version>[1,2)</version>
 	  </dependency>
-	  <!--<dependency>-->
-		  <!--<groupId>com.bluetrainsoftware.composite</groupId>-->
-		  <!--<artifactId>composite-groovy</artifactId>-->
-		  <!--<version>[1,2)</version>-->
-	  <!--</dependency>-->
-    <dependency>
-      <groupId>com.bluetrainsoftware.composite</groupId>
-      <artifactId>composite-unit-test</artifactId>
-      <version>[1,2)</version>
-      <scope>test</scope>
-    </dependency>
+
+	  <!-- added in Step 2 -->
+	  <!--
+	  <dependency>
+		  <groupId>com.bluetrainsoftware.composite</groupId>
+		  <artifactId>composite-groovy</artifactId>
+		  <version>[1,2)</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>com.bluetrainsoftware.bathe.initializers</groupId>
+		  <artifactId>system-property-loader</artifactId>
+		  <version>[1,2)</version>
+	  </dependency>
+	  -->
   </dependencies>
 
 	<build>
@@ -44,7 +47,7 @@
 				</dependencies>
 				<groupId>com.bluetrainsoftware.maven</groupId>
 				<artifactId>bathe-plugin</artifactId>
-				<version>1.3-SNAPSHOT</version>
+				<version>1.2</version>
 				<extensions>true</extensions>
 				<configuration>
 					<jumpClass>com.bluetrainsoftware.bathe.jarexample.JarExample</jumpClass>

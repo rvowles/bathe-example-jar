@@ -1,0 +1,110 @@
+= bathe-example-jar
+
+== Introduction
+
+We take you through two steps to show you what is happening with the bathe-plugin and bathe-booter.
+
+=== Step 1 - run the basic example
+
+This is a simple example that shows a public static void main app that just runs.
+
+If you type:
+
+----
+mvn compile
+mvn bathe:run
+----
+
+it should just run (like the exec plugin)
+
+if you type
+
+----
+mvn package
+----
+
+you should get a jar file in your target directory:
+
+----
+java -jar target/bathe-example-jar-1.1-SNAPSHOT.jar
+----
+
+
+If you have a look at what is in the zip file:
+
+----
+unzip target/bathe-example-jar-1.1-SNAPSHOT.jar
+Archive:  target/bathe-example-jar-1.1-SNAPSHOT.jar
+   creating: META-INF/
+   creating: bathe/
+  inflating: bathe/BatheBooter.class
+  inflating: bathe/BatheInitializer.class
+  inflating: bathe/BatheInitializerProcessor$1.class
+  inflating: bathe/BatheInitializerProcessor.class
+   creating: META-INF/maven/
+   creating: META-INF/maven/com.bluetrainsoftware.bathe/
+   creating: META-INF/maven/com.bluetrainsoftware.bathe/bathe-booter/
+  inflating: META-INF/maven/com.bluetrainsoftware.bathe/bathe-booter/pom.xml
+  inflating: META-INF/maven/com.bluetrainsoftware.bathe/bathe-booter/pom.properties
+   creating: WEB-INF/jars/classes/
+   creating: WEB-INF/jars/classes/com/
+   creating: WEB-INF/jars/classes/com/bluetrainsoftware/
+   creating: WEB-INF/jars/classes/com/bluetrainsoftware/bathe/
+   creating: WEB-INF/jars/classes/com/bluetrainsoftware/bathe/jarexample/
+  inflating: WEB-INF/jars/classes/com/bluetrainsoftware/bathe/jarexample/JarExample.class
+  inflating: META-INF/MANIFEST.MF
+----
+
+Looking in the manifest
+
+----
+Manifest-Version: 1.0
+Main-Class: bathe.BatheBooter
+Created-by: Bathe/Time
+Implementation-Version: 1.1-SNAPSHOT
+Jump-Class: com.bluetrainsoftware.bathe.jarexample.JarExample
+Jar-Offset: WEB-INF/jars
+----
+
+For more details on options, look at the Bathe Booter - https://github.com/rvowles/bathe-booter.
+
+=== Step 2 - add an initializer
+
+You need to include Groovy, we will be adding a Systems Properties Initializer which allows you to specify
+a -P flag and pass it system properties that get loaded before your main class runs.
+
+----
+java -jar target/bathe-example-jar-1.1-SNAPSHOT.jar -Pmy.properties
+----
+
+* Run this now. Nothing in the my.properties file gets reflected in the running app.
+
+* Uncomment out the two extra dependencies in the pom:
+
+[source,xml]
+.pom.xml
+----
+	  <dependency>
+		  <groupId>com.bluetrainsoftware.composite</groupId>
+		  <artifactId>composite-groovy</artifactId>
+		  <version>[1,2)</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>com.bluetrainsoftware.bathe.initializers</groupId>
+		  <artifactId>system-property-loader</artifactId>
+		  <version>[1,2)</version>
+	  </dependency>
+----
+
+* Now package it up again
+
+----
+mvn package
+java -jar target/bathe-example-jar-1.1-SNAPSHOT.jar -Pmy.properties
+----
+
+* Change the value in the properties file and run it again.
+* Unzip the jar file to see the effect.
+
+
+
